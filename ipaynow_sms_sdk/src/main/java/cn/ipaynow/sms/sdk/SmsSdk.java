@@ -24,7 +24,7 @@ public class SmsSdk
 {
     private  HttpsTookit httpsTookit;
     private final String url = "https://sms.ipaynow.cn";
-
+//    private final String url = "https://dby.ipaynow.cn/sms";
     public SmsSdk() {
         try {
             httpsTookit = new HttpsTookit(null,null);
@@ -44,13 +44,30 @@ public class SmsSdk
     }
 
 
-    public  String send_hy(String mobile,String content,String mhtOrderNo) {
-        return send(mobile,content,"S01",mhtOrderNo);
+    /**
+     * 发送行业短信(需要在运营后台-短信服务管理 中进行配置)
+     * @param mobile    发送手机号
+     * @param content   发送内容
+     * @param mhtOrderNo    商户订单号,可为空(为空时自动生成),和状态报告通知对应
+     * @param notifyUrl 后台通知地址
+     * @return  现在支付订单号,和状态报告通知对应
+     */
+    public  String send_hy(String mobile,String content,String mhtOrderNo,String notifyUrl) {
+        return send(mobile,content,"S01",mhtOrderNo,notifyUrl);
     }
-    public  String send_yx(String mobile,String content,String mhtOrderNo) {
-        return send(mobile,content,"YX_01",mhtOrderNo);
+
+    /**
+     * 发送营销短信(需要在运营后台-短信服务管理 中进行配置)
+     * @param mobile    发送手机号
+     * @param content   发送内容
+     * @param mhtOrderNo    商户订单号,可为空(为空时自动生成),和状态报告通知对应
+     * @param notifyUrl 后台通知地址
+     * @return  现在支付订单号,和状态报告通知对应
+     */
+    public  String send_yx(String mobile,String content,String mhtOrderNo,String notifyUrl) {
+        return send(mobile,content,"YX_01",mhtOrderNo,notifyUrl);
     }
-    private  String send(String mobile,String content,String type,String mhtOrderNo) {
+    private  String send(String mobile,String content,String type,String mhtOrderNo,String notifyUrl) {
         try {
 
             Map<String,String> requestMap = new HashMap<String, String>();
@@ -64,7 +81,7 @@ public class SmsSdk
             }
             requestMap.put("mobile",mobile);
             requestMap.put("content", URLEncoder.encode(content,"utf-8"));
-            requestMap.put("notifyUrl","https://op-tester.ipaynow.cn/paytest/notify");
+            requestMap.put("notifyUrl",notifyUrl);
 
             String toRSAStr = FormDateReportConvertor.postFormLinkReport(requestMap);
             //message=base64(appId=xxx)| base64(3DES(报文原文))|base64(MD5(报文原文+&+ md5Key))
@@ -125,6 +142,49 @@ public class SmsSdk
             return null;
         }
     }
+
+
+    /**
+     * 状态报告查询
+     * @param nowPayOrderNo 现在支付订单号(send_yx和send_hy方法的返回值)
+     * @param mobile 手机号
+     * @return 发送成功返回true , 失败false
+     */
+    public  boolean query(String nowPayOrderNo,String mobile) {
+        try {
+
+            Map requestMap = new HashMap();
+            requestMap.put("funcode","SMS_QUERY");
+            requestMap.put("appId",PropertiesLoader.getAppId());
+            requestMap.put("nowPayOrderNo",nowPayOrderNo);
+            requestMap.put("mobile",mobile);
+
+            String content = FormDateReportConvertor.postFormLinkReport(requestMap);
+
+//            String content = "funcode=SMS_QUERY&appId="+PropertiesLoader.getAppId()+"&nowPayOrderNo="+nowPayOrderNo+"&mobile="+mobile;
+
+            String mchSign = EncryDecryUtils.md5(content+"&"+PropertiesLoader.getMd5());
+
+            content = content+"&mchSign="+mchSign;
+
+            String result = httpsTookit.doPost(url,content,null,null,"UTF-8");
+            result = result.trim();
+
+
+            Map map = form2Map(result);
+            if(map.get("funcode") != null && map.get("funcode").equals("SMS_QUERY") &&
+                    map.get("responseCode") != null && map.get("responseCode").toString().trim().equals("00") &&
+                    map.get("responseMsg") != null && map.get("responseMsg").toString().trim().equals("success")){
+                //A001: 收到
+                //A00H: 未收到(关机)
+                return map.get("tradeStatus").toString().equals("A001");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
 
     private Map form2Map(String s) {
