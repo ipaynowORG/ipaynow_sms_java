@@ -116,6 +116,17 @@ public class SmsSdk
             String originalMsg  =  EncryDecryUtils.decryptFromBase64DES(PropertiesLoader.get3Des(), return2);
 //            System.out.println("返回的报文原文是:"+originalMsg);
 
+            /**
+             funcode=S01
+             mhtOrderNo=oR5JuQ7zM2bJf
+             nowpayTransId=400001201711091044542179806
+             responseCode=00
+             responseMsg=success
+             responseTime=20171109104454
+             status=00
+             */
+
+
             //解析第三部分，获取原始签名
             String originalSign  =  EncryDecryUtils.base64Decrypt(return3);
 //            System.out.println("返回的报文原始签名是:"+originalSign);
@@ -161,8 +172,6 @@ public class SmsSdk
 
             String content = FormDateReportConvertor.postFormLinkReport(requestMap);
 
-//            String content = "funcode=SMS_QUERY&appId="+PropertiesLoader.getAppId()+"&nowPayOrderNo="+nowPayOrderNo+"&mobile="+mobile;
-
             String mchSign = EncryDecryUtils.md5(content+"&"+PropertiesLoader.getMd5());
 
             content = content+"&mchSign="+mchSign;
@@ -170,6 +179,16 @@ public class SmsSdk
             String result = httpsTookit.doPost(url,content,null,null,"UTF-8");
             result = result.trim();
 
+            /**
+             appId=150753086263684
+             funcode=SMS_QUERY
+             mhtOrderNo=Kz79USCP3w50J
+             responseCode=00
+             responseMsg=success
+             responseTime=20171109104855
+             tradeStatus=A001
+             transTime=2017-11-09 10:44:19
+             */
 
             Map map = form2Map(result);
             if(map.get("funcode") != null && map.get("funcode").equals("SMS_QUERY") &&

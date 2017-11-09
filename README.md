@@ -115,22 +115,52 @@ Maven坐标如下
         <tr>
             <td>功能码</td>
             <td>funcode</td>
-            <td>定值：N001</td>
+            <td>同下行时候的输入,S01或YX_01</td>
         </tr>
         <tr>
-            <td>接口版本号</td>
-            <td>version</td>
-            <td>定值：1.0.0</td>
+            <td>商户应用ID</td>
+            <td>appId</td>
+            <td>同输入</td>
          </tr>
 <tr>
-            <td>商户应用唯一标识</td>
-            <td>appId</td>
-            <td></td>
+            <td>手机号</td>
+            <td>phone</td>
+            <td>下行手机号</td>
          </tr>
 <tr>
             <td>商户订单号</td>
             <td>mhtOrderNo</td>
+            <td>同输入</td>
+         </tr>
+<tr>
+            <td>订单生成时间</td>
+            <td>mhtOrderStartTime</td>
             <td></td>
+         </tr>
+<tr>
+            <td>现在支付订单号</td>
+            <td>nowPayOrderNo</td>
+            <td></td>
+         </tr>
+<tr>
+            <td>字符编码</td>
+            <td>mhtCharset</td>
+            <td>定值UTF-8</td>
+         </tr>
+<tr>
+            <td>签名类型</td>
+            <td>signType</td>
+            <td>定值MD5</td>
+         </tr>
+<tr>
+            <td>签名值</td>
+            <td>signature</td>
+            <td></td>
+         </tr>
+<tr>
+            <td>推送状态</td>
+            <td>tradeStatus</td>
+            <td>A001:成功。A002:失败。 A00H:处理中</td>
          </tr>
     </table>
 
