@@ -23,11 +23,11 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;[2.2 接受通知(状态报告)](#2.2)
 
-&nbsp;&nbsp;&nbsp;&nbsp;[2.3 查询短信发送结果](#2.3)
+&nbsp;&nbsp;&nbsp;&nbsp;[2.3 查询短信发送结果(状态报告)](#2.3)
 
 
-[3. 完整DEMO](#3)
-
+[3. 配置文件](#3)
+[4. DEMO](#4)
 
 <h2 id='1'> 1. 概述 </h2>
 
@@ -69,7 +69,7 @@ Maven坐标如下
              * @param content   发送内容
              * @param mhtOrderNo    商户订单号,可为空(自动生成)。商户订单号和状态报告通知中的相关字段对应
              * @param notifyUrl 后台通知地址
-             * @return  现在支付订单号,和状态报告通知中的相关字段对应
+             * @return  现在支付订单号,和状态报告通知中的相关字段对应。查询短信发送结果(状态报告)使用该字段。
              */
             public  String send_hy(String mobile,String content,String mhtOrderNo,String notifyUrl)
 
@@ -83,14 +83,14 @@ Maven坐标如下
              * @param content   发送内容
              * @param mhtOrderNo    商户订单号,可为空(自动生成)。商户订单号和状态报告通知中的相关字段对应
              * @param notifyUrl 后台通知地址
-             * @return  现在支付订单号,和状态报告通知中的相关字段对应
+             * @return  现在支付订单号,和状态报告通知中的相关字段对应。查询短信发送结果(状态报告)使用该字段。
              */
             public  String send_yx(String mobile,String content,String mhtOrderNo,String notifyUrl)
 
 
 <h4 id='2.2'>2.2 接受通知(状态报告)</h4>
 
-通知方式采用httppost方式通知,接受demo如下
+由现在支付方发起,通知方式采用httppost方式通知,接受demo如下
 
         //获取通知数据需要从body中流式读取
         BufferedReader reader = req.getReader();
@@ -133,21 +133,39 @@ Maven坐标如下
          </tr>
     </table>
 
-<h4 id='2.3'> 2.3 查询短信发送结果 </h4>
+<h4 id='2.3'> 2.3 查询短信发送结果(状态报告) </h4>
 
-- xxxxx
+- 查询短信发送结果(状态报告)
 
-        /**
-         * 商户微信App支付订单查询
-         * @param mhtOrderNo    商户订单号
-         * @param appId 商户的AppId,https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey
-         * @param appKey 商户的AppKey,https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey
-         * @return
-         */
-        public Map queryOrderWxApp(String mhtOrderNo,App app)
+            /**
+             * 查询短信发送结果(状态报告)
+             * @param nowPayOrderNo 现在支付订单号(send_yx和send_hy方法的返回值)
+             * @param mobile 手机号
+             * @return 发送成功返回true , 失败false
+             */
+            public  boolean query(String nowPayOrderNo,String mobile)
 
-<h2 id='3'> 3. 完整DEMO </h2>
+<h2 id='3'> 3. 配置文件 </h2>
 
-            直接运行cn.ipaynow.ipaynow_pay_demo.Main
-            访问
-            http://127.0.0.1:7072/paytest/index.html
+classpath下创建名为ipaynow-sms-sdk.properties的配置文件,内容如下
+``
+#appId(应用ID)和md5(appKey),登录商户后台 : https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey
+appId=xxxxxxxxx
+md5=xxxxxxxxxx
+#需要在运营后台-短信服务管理 中为商户进行配置
+des=xxxxxxxx
+```
+
+
+<h2 id='4'> 4. DEMO </h2>
+```
+    private static SmsSdk smsSdk = new SmsSdk();
+    public static void main(String [] args){
+        //发送行业短信
+        System.out.println(smsSdk.send_hy("13401234567","内容"null,"https://www.xxx.com"));
+
+        //查询发送结果
+        System.out.println(smsSdk.query("1234567890987654321","13401234567"));
+
+}
+```

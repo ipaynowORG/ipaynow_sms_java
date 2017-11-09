@@ -12,22 +12,14 @@ public class Demo {
 
     public static void main(String [] args){
 
-//        System.out.println(smsSdk.send_hy("13401190417",
-//                "1a的2",
-//                null,
-//                "https://op-tester.ipaynow.cn/paytest/notify"));
+        //发送行业短信
+        System.out.println(smsSdk.send_hy("13401190417",
+                "1a的2",
+                null,
+                "https://op-tester.ipaynow.cn/paytest/notify"));
 
+        //查询发送结果
         System.out.println(smsSdk.query("400001201711081839432162349","13401190417"));
-
-
-
-
-
-
-
-
-
-
 
     }
 
