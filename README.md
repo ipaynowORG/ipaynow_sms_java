@@ -15,7 +15,7 @@
 
 [2. API](#2)
 
-&nbsp;&nbsp;&nbsp;&nbsp;[2.1 聚合交易API](#2.1)
+&nbsp;&nbsp;&nbsp;&nbsp;[2.1 短信发送](#2.1)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[行业短信发送](#2.1.1)
 
