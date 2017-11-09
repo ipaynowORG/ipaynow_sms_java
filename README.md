@@ -149,7 +149,7 @@ Maven坐标如下
 
 classpath下创建名为ipaynow-sms-sdk.properties的配置文件,内容如下
 
-``
+```
 #appId(应用ID)和md5(appKey),登录商户后台 : https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey
 appId=xxxxxxxxx
 md5=xxxxxxxxxx
