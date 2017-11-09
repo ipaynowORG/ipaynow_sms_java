@@ -48,9 +48,9 @@ public class SmsSdk
      * 发送行业短信(需要在运营后台-短信服务管理 中进行配置)
      * @param mobile    发送手机号
      * @param content   发送内容
-     * @param mhtOrderNo    商户订单号,可为空(为空时自动生成),和状态报告通知对应
+     * @param mhtOrderNo    商户订单号,可为空(自动生成)。商户订单号和状态报告通知中的相关字段对应
      * @param notifyUrl 后台通知地址
-     * @return  现在支付订单号,和状态报告通知对应
+     * @return  现在支付订单号,和状态报告通知中的相关字段对应
      */
     public  String send_hy(String mobile,String content,String mhtOrderNo,String notifyUrl) {
         return send(mobile,content,"S01",mhtOrderNo,notifyUrl);
@@ -60,9 +60,9 @@ public class SmsSdk
      * 发送营销短信(需要在运营后台-短信服务管理 中进行配置)
      * @param mobile    发送手机号
      * @param content   发送内容
-     * @param mhtOrderNo    商户订单号,可为空(为空时自动生成),和状态报告通知对应
+     * @param mhtOrderNo    商户订单号,可为空(自动生成)。商户订单号和状态报告通知中的相关字段对应
      * @param notifyUrl 后台通知地址
-     * @return  现在支付订单号,和状态报告通知对应
+     * @return  现在支付订单号,和状态报告通知中的相关字段对应
      */
     public  String send_yx(String mobile,String content,String mhtOrderNo,String notifyUrl) {
         return send(mobile,content,"YX_01",mhtOrderNo,notifyUrl);

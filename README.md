@@ -63,34 +63,29 @@ Maven坐标如下
 
 - 行业短信发送
 
-        /**
-         * 微信被扫支付
-         * @param app appId(应用ID)和appKey ,
-         * 登录商户后台 : https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey
-         * @param orderDetail 商品名称,商品描述,商品价格(单位分),商品标记(用于营销活动)
-         * @param mhtSubAppId 微信子号对应多个公众号的时候必填,如果只对应一个公众号则不传
-         * @param notifyUrl 后台通知地址,详见2.2
-         * @param channelAuthCode 支付码
-         * @param mhtOrderNo 商户订单号,如果为空则自动生成商户订单号
-         * @return  respResult 应答码 responseMsg 应答消息 mhtOrderNo 商户订单号 nowPayOrderNo 现在支付订单号 responseTime 相应时间 payResult 支付结果
-         */
-        public ResultScan05 wx_scan_05(App app, OrderDetail orderDetail,String mhtSubAppId, String notifyUrl, String channelAuthCode,String mhtOrderNo)
+            /**
+             * 发送行业短信(需要在运营后台-短信服务管理 中进行配置)
+             * @param mobile    发送手机号
+             * @param content   发送内容
+             * @param mhtOrderNo    商户订单号,可为空(自动生成)。商户订单号和状态报告通知中的相关字段对应
+             * @param notifyUrl 后台通知地址
+             * @return  现在支付订单号,和状态报告通知中的相关字段对应
+             */
+            public  String send_hy(String mobile,String content,String mhtOrderNo,String notifyUrl)
 
 <h5 id='2.1.2'></h4>
 
 - 营销短信发送
 
-        /**
-         * 支付宝被扫支付
-         * @param app appId(应用ID)和appKey ,
-         * 登录商户后台 : https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey
-         * @param orderDetail 商品名称,商品描述,商品价格(单位分),商品标记(用于营销活动)
-         * @param notifyUrl 后台通知地址,详见2.2
-         * @param channelAuthCode 支付码
-         * @param mhtOrderNo 商户订单号,如果为空则自动生成商户订单号
-         * @return  respResult 应答码 responseMsg 应答消息 mhtOrderNo 商户订单号 nowPayOrderNo 现在支付订单号 responseTime 相应时间 payResult 支付结果
-         */
-        public ResultScan05 ali_scan_05(App app, OrderDetail orderDetail, String notifyUrl, String channelAuthCode,String mhtOrderNo)
+            /**
+             * 发送营销短信(需要在运营后台-短信服务管理 中进行配置)
+             * @param mobile    发送手机号
+             * @param content   发送内容
+             * @param mhtOrderNo    商户订单号,可为空(自动生成)。商户订单号和状态报告通知中的相关字段对应
+             * @param notifyUrl 后台通知地址
+             * @return  现在支付订单号,和状态报告通知中的相关字段对应
+             */
+            public  String send_yx(String mobile,String content,String mhtOrderNo,String notifyUrl)
 
 
 <h4 id='2.2'>2.2 接受通知(状态报告)</h4>
