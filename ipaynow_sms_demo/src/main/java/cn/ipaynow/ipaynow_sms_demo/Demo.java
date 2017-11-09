@@ -13,13 +13,13 @@ public class Demo {
     public static void main(String [] args){
 
         //发送行业短信
-//        System.out.println(smsSdk.send_hy("13401190417",
+//        System.out.println(smsSdk.send_hy("xxxxxxxxxxxxxx",
 //                "1a的2",
 //                null,
 //                "https://op-tester.ipaynow.cn/paytest/notify"));
 
         //查询发送结果
-        System.out.println(smsSdk.query("400001201711091044192182583","13401190417"));
+        System.out.println(smsSdk.query("400001201711091044192182583","xxxxxxxxxxx"));
 
     }
 
