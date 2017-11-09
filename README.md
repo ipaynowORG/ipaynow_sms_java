@@ -148,6 +148,7 @@ Maven坐标如下
 <h2 id='3'> 3. 配置文件 </h2>
 
 classpath下创建名为ipaynow-sms-sdk.properties的配置文件,内容如下
+
 ``
 #appId(应用ID)和md5(appKey),登录商户后台 : https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey
 appId=xxxxxxxxx
@@ -158,6 +159,7 @@ des=xxxxxxxx
 
 
 <h2 id='4'> 4. DEMO </h2>
+
 ```
     private static SmsSdk smsSdk = new SmsSdk();
     public static void main(String [] args){
