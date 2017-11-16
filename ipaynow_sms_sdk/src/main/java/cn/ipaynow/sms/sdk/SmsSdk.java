@@ -23,9 +23,14 @@ import java.util.Map;
 public class SmsSdk
 {
     private  HttpsTookit httpsTookit;
-    private final String url = "https://sms.ipaynow.cn";
-//    private final String url = "https://dby.ipaynow.cn/sms";
-    public SmsSdk() {
+    private final String url_prod = "https://sms.ipaynow.cn";
+    private final String url = "https://dby.ipaynow.cn/sms";
+
+
+    private boolean isDev;
+
+    public SmsSdk(boolean isDev) {
+        this.isDev = isDev;
         try {
             httpsTookit = new HttpsTookit(null,null);
         } catch (KeyStoreException e) {
@@ -41,6 +46,9 @@ public class SmsSdk
         } catch (UnrecoverableKeyException e) {
             e.printStackTrace();
         }
+    }
+    public SmsSdk() {
+        this(false);
     }
 
 
@@ -94,7 +102,7 @@ public class SmsSdk
             message = URLEncoder.encode(message,"UTF-8");
 
 
-            String result = httpsTookit.doPost(url,"funcode="+type+"&message="+message,null,null,"UTF-8");
+            String result = httpsTookit.doPost(isDev?url:url_prod,"funcode="+type+"&message="+message,null,null,"UTF-8");
             result = result.trim();
 
             //解包失败 或者 验签失败的时候res.split("\\|").length==2
@@ -176,7 +184,7 @@ public class SmsSdk
 
             content = content+"&mchSign="+mchSign;
 
-            String result = httpsTookit.doPost(url,content,null,null,"UTF-8");
+            String result = httpsTookit.doPost(isDev?url:url_prod,content,null,null,"UTF-8");
             result = result.trim();
 
             /**

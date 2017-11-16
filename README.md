@@ -4,7 +4,7 @@
 
 - 1.0.0 : 初稿
 
-
+- 1.0.1 : 允许客户指定调用生产(new SmsSdk())或测试(new SmsSdk(true))环境
 ## 目录 ##
 
 [1. 概述](#1)
@@ -47,7 +47,7 @@ Maven坐标如下
 	<dependency>
 	       <groupId>com.github.ipaynow</groupId>
            <artifactId>ipaynow_sms_sdk</artifactId>
-           <version>1.0.0</version>
+           <version>1.0.1</version>
 	</dependency>
 
 
@@ -58,6 +58,9 @@ Maven坐标如下
 
 业务客户端使用SDK的相关类: cn.ipaynow.sms.sdk.SmsSdk
 
+    SmsSdk smsSdk = new SmsSdk();//调用生产环境
+    SmsSdk smsSdk = new SmsSdk(true);//调用测试环境
+    
 <h4 id='2.1'> 2.1 短信发送 </h4>
 
 <h5 id='2.1.1'></h4>
